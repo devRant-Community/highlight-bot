@@ -1,0 +1,23 @@
+
+IGNORE THIS RANT IF YOU'RE READING THIS IN RANT FEED
+
+---
+
+THEME CONFIGURATION
+
+---
+
+In this rant you can set your theme for the syntax highlighter.
+Just like the comment with the preferred theme.
+
+Here's a list of themes:
+> 3024 Night
+> Blackboard
+> Base 16 Dark
+> Base 16 Light
+> Cobalt
+> Dracula
+> Duotone
+> Hopscotch
+> Lucario
+>
