@@ -9,22 +9,19 @@ class ThemeSelection {
 	}
 
 	private static function load () {
-		if (!file_exists(THEME_SELECTION_FILE))
-			return false;
-
 		if (!empty(self::$themeSelection))
-			return true;
+			return;
 
-		self::log('Loading Theme Selection...');
+		if (file_exists(THEME_SELECTION_FILE)) {
+			self::log('Loading Theme Selection...');
 
-		$rawJSON = file_get_contents(THEME_SELECTION_FILE);
-		self::$themeSelection = json_decode($rawJSON, true);
+			$rawJSON = file_get_contents(THEME_SELECTION_FILE);
+			self::$themeSelection = json_decode($rawJSON, true);
+		}
 
 		register_shutdown_function(function () {
 			self::save();
 		});
-
-		return true;
 	}
 
 	private static function save () {
@@ -37,7 +34,9 @@ class ThemeSelection {
 
 
 	public static function get ($userID) {
-		if (self::load()) {
+		self::load();
+
+		if (isset(self::$themeSelection[$userID])) {
 			return self::$themeSelection[$userID];
 		}
 
