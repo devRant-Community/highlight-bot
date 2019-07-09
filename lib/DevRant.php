@@ -36,7 +36,7 @@ class DevRant {
 	private function saveAuthToken () {
 		$this->log('Storing auth token in "' . DEVRANT_AUTH_TOKEN_FILE . '"...');
 
-		$rawJSON = json_encode($this->authToken);
+		$rawJSON = json_encode($this->authToken, DEBUG ? JSON_PRETTY_PRINT : 0);
 		file_put_contents(DEVRANT_AUTH_TOKEN_FILE, $rawJSON);
 	}
 
@@ -82,12 +82,12 @@ class DevRant {
 			'rant' => $msg,
 			'tags' => implode(', ', $tags),
 			'type' => $type,
-			'app' => 3,
+			'app'  => 3,
 			'plat' => 2,
 
-			'user_id' => $this->authToken['user_id'],
-			'token_id' => $this->authToken['id'],
-			'token_key' => $this->authToken['key']
+			'user_id'   => $this->authToken['user_id'],
+			'token_id'  => $this->authToken['id'],
+			'token_key' => $this->authToken['key'],
 		];
 
 		if ($image) {
@@ -111,7 +111,7 @@ class DevRant {
 			if ($success) {
 				$this->log('Posting Rant successful!');
 
-				return $response;
+				return $response['rant_id'];
 			}
 
 			$this->log('Posting Rant unsuccessful - ' . $response['error']);
@@ -129,12 +129,12 @@ class DevRant {
 
 		$params = [
 			'comment' => $msg,
-			'app' => 3,
-			'plat' => 2,
+			'app'     => 3,
+			'plat'    => 2,
 
-			'user_id' => $this->authToken['user_id'],
-			'token_id' => $this->authToken['id'],
-			'token_key' => $this->authToken['key']
+			'user_id'   => $this->authToken['user_id'],
+			'token_id'  => $this->authToken['id'],
+			'token_key' => $this->authToken['key'],
 		];
 
 		if ($image) {
@@ -177,9 +177,9 @@ class DevRant {
 		$response = HTTP::GET(DEVRANT_API . "/devrant/rants/$rantID", [
 			'app' => 3,
 
-			'user_id' => $this->authToken['user_id'],
-			'token_id' => $this->authToken['id'],
-			'token_key' => $this->authToken['key']
+			'user_id'   => $this->authToken['user_id'],
+			'token_id'  => $this->authToken['id'],
+			'token_key' => $this->authToken['key'],
 		]);
 
 		if ($response) {
@@ -205,12 +205,12 @@ class DevRant {
 		$this->log("Fetching comment $commentID...");
 
 		$response = HTTP::GET(DEVRANT_API . "/comments/$commentID", [
-			'app' => 3,
+			'app'  => 3,
 			'plat' => 2,
 
-			'user_id' => $this->authToken['user_id'],
-			'token_id' => $this->authToken['id'],
-			'token_key' => $this->authToken['key']
+			'user_id'   => $this->authToken['user_id'],
+			'token_id'  => $this->authToken['id'],
+			'token_key' => $this->authToken['key'],
 		]);
 
 		if ($response) {
@@ -238,9 +238,9 @@ class DevRant {
 		$response = HTTP::GET(DEVRANT_API . "/users/me/notif-feed", [
 			'app' => 3,
 
-			'user_id' => $this->authToken['user_id'],
-			'token_id' => $this->authToken['id'],
-			'token_key' => $this->authToken['key']
+			'user_id'   => $this->authToken['user_id'],
+			'token_id'  => $this->authToken['id'],
+			'token_key' => $this->authToken['key'],
 		]);
 
 		if ($response) {
@@ -268,9 +268,9 @@ class DevRant {
 		$response = HTTP::DELETE(DEVRANT_API . '/users/me/notif-feed', [
 			'app' => 3,
 
-			'user_id' => $this->authToken['user_id'],
-			'token_id' => $this->authToken['id'],
-			'token_key' => $this->authToken['key']
+			'user_id'   => $this->authToken['user_id'],
+			'token_id'  => $this->authToken['id'],
+			'token_key' => $this->authToken['key'],
 		]);
 
 		if ($response) {
