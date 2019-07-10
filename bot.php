@@ -24,6 +24,7 @@ usort($notifications['items'], function ($a, $b) {
 });
 
 $didSomething = false;
+$tempDirRequiresClear = false;
 
 foreach ($notifications['items'] as $notification) {
 	if ($notification['created_time'] > $lastCheckTime) {
@@ -40,9 +41,13 @@ foreach ($notifications['items'] as $notification) {
 				break;
 
 			case 'comment_mention':
+				require_once 'lib/ImageGenerator.php'; // Require here so it's not imported when not needed
+
 				$didSomething = true;
+				$tempDirRequiresClear = true;
 
 				botLog('Handling a code highlighting notif (CommentID: ' . $notification['comment_id'] . ')...');
+				ImageGenerator::handleNotif($devRant, $notification['comment_id']);
 				break;
 		}
 	}
@@ -50,4 +55,13 @@ foreach ($notifications['items'] as $notification) {
 
 if ($didSomething) {
 	$devRant->clearNotifications();
+}
+
+if ($tempDirRequiresClear) {
+	$files = glob('./temp/*');
+
+	foreach($files as $file){
+		if(is_file($file))
+			unlink($file);
+	}
 }

@@ -1,0 +1,17 @@
+{
+    "name": "Skayo/devRant-SyntaxHighlightBot",
+    "description": "A nice little bot for devrant.com that highlights code you post",
+    "authors": [
+        {
+            "name": "Skayo",
+            "email": "jonasg.cool@gmail.com",
+            "homepage": "https://skayo.tk",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "nesk/puphpeteer": "^1.6"
+    },
+    "license": "MIT",
+    "homepage": "https://devrant.com/users/highlight"
+}
