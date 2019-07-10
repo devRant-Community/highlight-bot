@@ -5,11 +5,19 @@ use Nesk\Puphpeteer\Puppeteer;
 require_once 'vendor/autoload.php';
 require_once 'ThemeSelection.php';
 
+// TODO: Prettify
+
 class ImageGenerator {
 
 	private static $puppeteer = false;
 
+	private static function log ($msg) {
+		if (DEBUG) echo 'ImageGenerator > ' . $msg . PHP_EOL;
+	}
+
 	private static function saveImageFromCarbon ($url, $saveFile) {
+		self::log('Starting Puppeteer...');
+
 		if (!self::$puppeteer)
 			self::$puppeteer = new Puppeteer();
 
@@ -23,11 +31,13 @@ class ImageGenerator {
 			'deviceScaleFactor' => 2,
 		]);
 
+		self::log("Going to url $url...");
 		$page->goto($url);
 
 		$exportContainer = $page->querySelector('#export-container');
 		$elementBounds = $exportContainer->boundingBox();
 
+		self::log("Saving screenshot of #export-container...");
 		$exportContainer->screenshot([
 			'path' => $saveFile,
 			'clip' => [
@@ -42,6 +52,7 @@ class ImageGenerator {
 	}
 
 	private static function getCarbonUrl ($options) {
+		self::log('Getting Carbon URL...');
 		$defaultOptions = [
 			't' => 'seti', // Theme
 			'l' => 'auto', // Language
@@ -100,16 +111,22 @@ class ImageGenerator {
 		$saveFile = "./temp/$commentID.png";
 
 		$commentBody = $comment['body'];
-		$commentBody = str_replace('@highlight', '', $commentBody);
 
-		$code = trim($commentBody);
+		preg_match('/.*@' . DEVRANT_USERNAME . '(.*)/s', $commentBody, $matches);
 
+		$code = trim($matches[1]);
+
+		if (empty($code))
+			return;
+
+		self::log("Generating and downloading image (File: $saveFile, Theme: $themeSelection)...");
 		self::generateAndSaveImage($saveFile, $code, $themeSelection);
 
 		if (file_exists($saveFile)) {
-			$msg = '@' . $comment['user_username'];
+			$mention = '@' . $comment['user_username'];
 
-			$devRant->postComment($comment['rant_id'], $msg, $saveFile);
+			self::log("Replying with generated image to user $mention...");
+			$devRant->postComment($comment['rant_id'], $mention, $saveFile);
 		}
 	}
 }

@@ -58,7 +58,7 @@ if ($didSomething) {
 }
 
 if ($tempDirRequiresClear) {
-	$files = glob('./temp/*');
+	$files = glob('./temp/*.png');
 
 	foreach($files as $file){
 		if(is_file($file))
