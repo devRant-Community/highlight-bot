@@ -237,7 +237,7 @@ class DevRant {
 
 		$response = HTTP::GET(DEVRANT_API . "/users/me/notif-feed", [
 			'app'       => 3,
-			'last_time' => $lastTime ?: time(),
+			'last_time' => $lastTime ?: 0,
 
 			'user_id'   => $this->authToken['user_id'],
 			'token_id'  => $this->authToken['id'],
