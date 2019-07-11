@@ -232,11 +232,12 @@ class DevRant {
 		return false;
 	}
 
-	public function getNotifications () {
+	public function getNotifications ($lastTime = false) {
 		$this->log("Fetching Notifications...");
 
 		$response = HTTP::GET(DEVRANT_API . "/users/me/notif-feed", [
-			'app' => 3,
+			'app'       => 3,
+			'last_time' => $lastTime ?: time(),
 
 			'user_id'   => $this->authToken['user_id'],
 			'token_id'  => $this->authToken['id'],
