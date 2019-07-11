@@ -5,9 +5,11 @@
 
 require_once 'config.php';
 
+require_once 'lib/Store.php';
 require_once 'lib/DevRant.php';
 
-$devRant = new DevRant();
+$store = new Store('./store', ['prettify' => true, 'log' => DEBUG]);
+$devRant = new DevRant($store);
 
 // Post Rant
 $rantText = file_get_contents('util/introRant.txt');

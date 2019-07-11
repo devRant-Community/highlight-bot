@@ -96,37 +96,4 @@ class ImageGenerator {
 
 		self::saveImageFromCarbon($url, $saveFile);
 	}
-
-
-
-	public static function handleNotif($devRant, $commentID) {
-		$comment = $devRant->getComment($commentID);
-		if (!$comment) return;
-
-		$themeSelection = ThemeSelection::get($comment['user_id']);
-
-		if (!$themeSelection)
-			$themeSelection = 'seti';
-
-		$saveFile = "./temp/$commentID.png";
-
-		$commentBody = $comment['body'];
-
-		preg_match('/.*@' . DEVRANT_USERNAME . '(.*)/s', $commentBody, $matches);
-
-		$code = trim($matches[1]);
-
-		if (empty($code))
-			return;
-
-		self::log("Generating and downloading image (File: $saveFile, Theme: $themeSelection)...");
-		self::generateAndSaveImage($saveFile, $code, $themeSelection);
-
-		if (file_exists($saveFile)) {
-			$mention = '@' . $comment['user_username'];
-
-			self::log("Replying with generated image to user $mention...");
-			$devRant->postComment($comment['rant_id'], $mention, $saveFile);
-		}
-	}
 }

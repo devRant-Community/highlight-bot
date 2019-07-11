@@ -5,10 +5,12 @@
 
 require_once 'config.php';
 
+require_once 'lib/Store.php';
 require_once 'lib/DevRant.php';
 require_once 'lib/ImageGenerator.php';
 
-$devRant = new DevRant();
+$store = new Store('./store', ['prettify' => true, 'log' => DEBUG]);
+$devRant = new DevRant($store);
 $imageGenerator = new ImageGenerator();
 
 // Post Rant

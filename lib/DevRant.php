@@ -6,38 +6,23 @@ require_once 'lib/HTTP.php';
 class DevRant {
 	private $authToken = [];
 
-	public function __construct () {
-		$success = $this->loadAuthToken();
+	private $store;
 
-		if (!$success || $this->hasTokenExpired()) {
+	public function __construct ($store) {
+		$this->store = $store;
+
+		$this->authToken = $store('auth-token');
+
+		if (count($this->authToken->data) === 0 || $this->hasTokenExpired()) {
 			$this->log('Auth token has expired or hasn\'t been set yet.');
 			$this->login();
+		} else {
+			$this->log('Auth token valid.');
 		}
 	}
 
 	private function log ($msg) {
 		if (DEBUG) echo 'DevRant > ' . $msg . PHP_EOL;
-	}
-
-	private function loadAuthToken () {
-		if (!file_exists(DEVRANT_AUTH_TOKEN_FILE))
-			return false;
-
-		$this->log('Reading auth token from "' . DEVRANT_AUTH_TOKEN_FILE . '"...');
-
-		$rawJSON = file_get_contents(DEVRANT_AUTH_TOKEN_FILE);
-		$authToken = json_decode($rawJSON, true);
-
-		$this->authToken = $authToken;
-
-		return true;
-	}
-
-	private function saveAuthToken () {
-		$this->log('Storing auth token in "' . DEVRANT_AUTH_TOKEN_FILE . '"...');
-
-		$rawJSON = json_encode($this->authToken, DEBUG ? JSON_PRETTY_PRINT : 0);
-		file_put_contents(DEVRANT_AUTH_TOKEN_FILE, $rawJSON);
 	}
 
 	private function hasTokenExpired () {
@@ -60,7 +45,7 @@ class DevRant {
 				$this->log('Login successful!');
 
 				$this->authToken = $response['auth_token'];
-				$this->saveAuthToken();
+				$this->store->in('auth-token')->data = $this->authToken;
 
 				return true;
 			}

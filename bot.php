@@ -1,68 +1,74 @@
 <?php
 
-// This file gets executed every 5 seconds and handles everything
+// This file gets executed every few seconds and handles everything
 
 require_once 'config.php';
 
+require_once 'lib/Store.php';
 require_once 'lib/DevRant.php';
 
 function botLog ($msg) {
 	if (DEBUG) echo 'Bot > ' . $msg . PHP_EOL;
 }
 
-$devRant = new DevRant();
+$store = new Store('./store', ['prettify' => true, 'log' => DEBUG]);
+$devRant = new DevRant($store);
 
-$lastCheckTime = file_exists(BOT_LAST_CHECK_TIME_FILE) ?
-	intval(file_get_contents(BOT_LAST_CHECK_TIME_FILE)) : time();
-
-$notifications = $devRant->getNotifications($lastCheckTime);
-
-if (count($notifications['items']) > 0)
-	file_put_contents(BOT_LAST_CHECK_TIME_FILE, time());
+$notifications = $devRant->getNotifications();
+$devRant->clearNotifications();
 
 usort($notifications['items'], function ($a, $b) {
 	return $a['created_time'] <=> $b['created_time'];
 });
 
-botLog(count($notifications['items']) . ' new notifications!');
+require_once 'lib/NotifHandler.php';
 
-$didSomething = false;
+$notifHandler = new NotifHandler($store, $devRant);
+
 $tempDirRequiresClear = false;
+$didSomething = false;
+
+if (!isset($store('misc')['lastNotifTime']))
+	$store('misc')['lastNotifTime'] = time();
+
+$lastNotifTime = $store('misc')['lastNotifTime'];
+$newLastNotifTime = 0;
 
 foreach ($notifications['items'] as $notification) {
-	switch ($notification['type']) {
-		case 'comment_vote':
-			if ($notification['rant_id'] === THEME_SELECTION_RANT_ID) {
-				require_once 'lib/ThemeSelection.php'; // Require here so it's not imported when not needed
+	if ($notification['type'] !== 'comment_vote' && $notification['type'] !== 'comment_mention')
+		continue;
 
-				$didSomething = true;
+	if ($notification['type'] === 'comment_vote' && $notification['rant_id'] !== THEME_SELECTION_RANT_ID)
+		continue;
 
-				botLog('Handling a theme selection notif (User: ' . $notification['uid'] . ')...');
-				ThemeSelection::handleNotif($devRant, $notification['uid'], $notification['comment_id']);
-			}
-			break;
-
-		case 'comment_mention':
-			require_once 'lib/ImageGenerator.php'; // Require here so it's not imported when not needed
-
-			$didSomething = true;
+	if ($notification['created_time'] > $lastNotifTime || $notification['read'] === 0) {
+		if ($notification['type'] === 'comment_vote') {
+			botLog('Handling a theme selection notif (User: ' . $notification['uid'] . ')...');
+			$notifHandler->handleThemeSelectNotif($notification['uid'], $notification['comment_id']);
+		} else if ($notification['type'] === 'comment_mention') {
 			$tempDirRequiresClear = true;
 
 			botLog('Handling a code highlighting notif (CommentID: ' . $notification['comment_id'] . ')...');
-			ImageGenerator::handleNotif($devRant, $notification['comment_id']);
-			break;
+			$notifHandler->handleHighlightNotif($notification['comment_id']);
+		}
+
+		$didSomething = true;
+		$newLastNotifTime = $notification['created_time'];
 	}
 }
 
 if ($didSomething) {
-	$devRant->clearNotifications();
+	$store('misc')['lastNotifTime'] = $newLastNotifTime;
+} else {
+	botLog('Nothing to do...');
 }
 
 if ($tempDirRequiresClear) {
+	botLog('Clearing temp directory...');
 	$files = glob('./temp/*.png');
 
-	foreach($files as $file){
-		if(is_file($file))
+	foreach ($files as $file) {
+		if (is_file($file))
 			unlink($file);
 	}
 }
