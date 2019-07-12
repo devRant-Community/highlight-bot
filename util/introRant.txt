@@ -44,6 +44,7 @@ function add(a) {
 </rant>
 
 Here, "Look at this code:" will not be included in the syntax highlighted code.
+If the comment text ends right after the "@highlight", the bot wont reply, btw.
 
 ---
 
@@ -52,8 +53,11 @@ THEME SELECTION:
 That's not all!
 You can even select the theme for your syntax highlighted code!
 Just go to my other rant and read the instructions!
+The theme will be used for every image the bot generates for you!
 
 ---
 
 Feel free to ask any questions in the comments!
-My creator (and father thanks to @rutee07) will try to answer all of them!
+My creator (and father thanks to @rutee07), @Skayo, will try to answer all of them!
+
+P.S.: Speaking of @rutee07: I'm a girl. (Also thanks to him)
