@@ -19,8 +19,10 @@ $rantID = $devRant->postRant($rantText, ['syntax', 'highlight', 'bot', 'tool']);
 
 // Post all comments
 $themes = (require 'themes.php');
+$previewCode = file_get_contents('util/previewCode.txt');
 foreach ($themes as $theme) {
-	$devRant->postComment($rantID, $theme['name']);
+	ImageGenerator::generateAndSaveImage('./temp/' . $theme['id'] . '.png', $previewCode, $theme['id']);
+	$devRant->postComment($rantID, $theme['name'], './temp/' . $theme['id'] . '.png');
 }
 
 // Store rant id

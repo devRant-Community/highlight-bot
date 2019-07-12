@@ -1,5 +1,5 @@
 
-IGNORE THIS RANT IF YOU'RE READING THIS IN RANT FEED
+TAKE A LOOK AT MY OTHER RANT FIRST!
 
 ---
 
@@ -7,13 +7,15 @@ SYNTAX THEME SELECTION
 
 ---
 
-In this rant you can set your theme for the syntax highlighter.
+In this rant you can set your theme for the syntax highlighter!
 Just ++ the comment with your preferred theme.
 
-The bot checks for the "<user> ++'d you comment!" notification and stores your selection.
-So when you ++ multiple themes, your theme will be the one you ++'d the last.
+The bot checks for the "<user> ++'d your comment!" notification and stores your selection!
+(When you ++ multiple themes, your theme will be the one you ++'d the last)
+Then, next time you request a syntax highlighting (see other rant on how to do that), that theme will be used!
 
-Please don't post any comments here!!!
+Please don't post any comments here if possible!!!
+(You can post comments and ask questions in the other rant)
 Feel free to ++ this rant tho ;D
 
 ---

@@ -1,0 +1,59 @@
+
+INTRODUCING:
+
+---
+
+SYNTAX HIGHLIGHT BOT
+
+---
+
+I have lots of ideas.
+This was one of them.
+
+Last week I was playing around with https://carbon.now.sh and found it quite cool!
+Then I thought: https://carbon.now.sh supports Twitter. Cool. But what about devRant?
+So yeah, then I got the idea: A devRant Bot that generates https://carbon.now.sh images!
+
+Now, 4 days and 800 lines of code later, the bot is ready!
+I had to rewrite the notif checking code 4 times, because none of them worked perfectly...
+The final solution is so good that I want to keep it a secret for now ;D
+
+---
+
+HOW TO USE:
+
+All you need to do is to mention the bot!
+Example:
+
+<rant>
+@highlight
+console.log('Hello World!');
+</rant>
+
+The bot then generates your syntax highlighted code (as an image) and posts it as comment a few seconds later.
+Everything before the "@highlight" will be ignored!
+Example:
+
+<rant>
+Look at this code:
+
+@highlight
+function add(a) {
+  return a + 1;
+}
+</rant>
+
+Here, "Look at this code:" will not be included in the syntax highlighted code.
+
+---
+
+THEME SELECTION:
+
+That's not all!
+You can even select the theme for your syntax highlighted code!
+Just go to my other rant and read the instructions!
+
+---
+
+Feel free to ask any questions in the comments!
+My creator (and father thanks to @rutee07) will try to answer all of them!
