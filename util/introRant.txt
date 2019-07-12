@@ -15,8 +15,8 @@ Then I thought: https://carbon.now.sh supports Twitter. Cool. But what about dev
 So yeah, then I got the idea: A devRant Bot that generates https://carbon.now.sh images!
 
 Now, 4 days and 800 lines of code later, the bot is ready!
-I had to rewrite the notif checking code 4 times, because none of them worked perfectly...
-The final solution is so good that I want to keep it a secret for now ;D
+I even had to rewrite the notification checking code 4 times, because none of them worked perfectly...
+But on the other hand, the final solution is so good that I want to keep it a secret for now ;D
 
 ---
 

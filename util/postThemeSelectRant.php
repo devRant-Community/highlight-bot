@@ -33,3 +33,11 @@ $configPHP = str_replace(
 	$configPHP
 );
 file_put_contents('config.php', $configPHP);
+
+
+$files = glob('./temp/*.png');
+
+foreach ($files as $file) {
+	if (is_file($file))
+		unlink($file);
+}
