@@ -13,4 +13,4 @@ $devRant = new DevRant($store);
 
 // Post Rant
 $rantText = file_get_contents('util/introRant.txt');
-$rantID = $devRant->postRant($rantText, ['syntax', 'highlight', 'bot', 'tool', 'carbon', 'util', 'image', 'comment', 'code', 'script']);
+$rantID = $devRant->postRant($rantText, ['syntax', 'highlight', 'bot', 'tool', 'carbon', 'util', 'image', 'comment', 'code', 'script', 'carbon.now.sh', 'rant', 'feature']);
