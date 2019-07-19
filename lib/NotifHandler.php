@@ -52,7 +52,7 @@ class NotifHandler {
 
 		$commentBody = $comment['body'];
 
-		preg_match('/.*?@' . DEVRANT_USERNAME . '(.*)/s', $commentBody, $matches);
+		preg_match('/.*?@' . DEVRANT_USERNAME . '(.*)/si', $commentBody, $matches);
 
 		$code = trim($matches[1]);
 
