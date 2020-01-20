@@ -1,5 +1,5 @@
 {
-    "name": "Skayo/devRant-SyntaxHighlightBot",
+    "name": "skayo/devrant-highlightbot",
     "description": "A nice little bot for devrant.com that highlights code you post",
     "authors": [
         {

@@ -35,18 +35,23 @@ class ImageGenerator {
 		$page->goto($url);
 
 		$exportContainer = $page->querySelector('#export-container');
-		$elementBounds = $exportContainer->boundingBox();
 
-		self::log("Saving screenshot of #export-container...");
-		$exportContainer->screenshot([
-			'path' => $saveFile,
-			'clip' => [
-				'x'      => round($elementBounds['x']),
-				'y'      => $elementBounds['y'],
-				'width'  => $elementBounds['width'],
-				'height' => round($elementBounds['height']) - 1,
-			],
-		]);
+		try {
+			$elementBounds = $exportContainer->boundingBox();
+
+			self::log("Saving screenshot of #export-container...");
+			$exportContainer->screenshot([
+				'path' => $saveFile,
+				'clip' => [
+					'x'      => round($elementBounds['x']),
+					'y'      => $elementBounds['y'],
+					'width'  => $elementBounds['width'],
+					'height' => round($elementBounds['height']) - 1,
+				],
+			]);
+		} catch (Error $error) {
+			self::log("Carbon returned an unexpected error - not saving screenshot...");
+		}
 
 		$browser->close();
 	}
