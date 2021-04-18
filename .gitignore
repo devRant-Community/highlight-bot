@@ -1,5 +1,6 @@
 composer.lock
 pnpm-lock.yaml
+package-lock.json
 config.php
 run.bat
 test.php
