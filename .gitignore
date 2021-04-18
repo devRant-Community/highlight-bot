@@ -1,6 +1,13 @@
+composer.lock
+pnpm-lock.yaml
+config.php
+run.bat
+test.php
+test.png
 
+node_modules
+vendor
 .idea
 
-config.php
-
-vendor
+store/*
+!store/.gitkeep

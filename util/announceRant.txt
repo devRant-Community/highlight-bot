@@ -1,0 +1,16 @@
+Some of you may have noticed:
+I was working on a new devRant bot recently.
+
+But this time it doesn't just post a boring random quote everyday, like my @RandomQuote Bot.
+This time it actually reacts to the user!
+
+Basically the bot uses https://carbon.now.sh to generate nice little syntax highlighted code.
+I just thought this could be handy in some occasions here on devRant.
+Especially in the "Questions" category!
+
+Here's the link to the introduction of the bot:
+https://...
+
+A lot of work went into this bot, so it would be great to hear what you think about it and if you're planning on using it!
+
+Thanks for reading!
